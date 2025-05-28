@@ -1,3 +1,6 @@
+<php
 
-ech@dfo Hello my name is vishal";
+
+print_r("ree")
+
 ?>
