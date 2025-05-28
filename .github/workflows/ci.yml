@@ -1,9 +1,4 @@
 
----
-
-## ✅ How to Use This Action in Another Repo
-
-Aapka main project (e.g., PHP app) ka workflow kuch aisa hoga:
 
 name: CI by Ravish
 
