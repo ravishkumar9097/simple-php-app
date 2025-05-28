@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # pura git history chahiye taaki diff chale
+        fetch-depth: 0
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -20,7 +20,10 @@ jobs:
         php-version: '8.1'
 
     - name: Check PHP syntax on changed files only
+      shell: bash
       run: |
+        set -e  # agar koi command fail ho to poora step fail ho jaye
+
         echo "Getting list of changed PHP files compared to main branch..."
         files=$(git diff --name-only origin/main...HEAD -- '*.php')
 
