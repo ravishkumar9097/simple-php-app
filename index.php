@@ -1,3 +1,3 @@
 
-echdfo "Hello my name is vishal";
+ech@dfo Hello my name is vishal";
 ?>
