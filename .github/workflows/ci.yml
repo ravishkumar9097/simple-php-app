@@ -1,22 +1,24 @@
-name: Simple Core PHP CI by Ravish Kumar 
+name: PHP CI with Ravish PHP Setup
 
 on:
   push:
-    branches: [ "main" ]  # या "master"
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'  # PHP version बदल सकते हो
+      - name: Setup PHP with Ravish custom action
+        uses: ravishkumar9097/ravish-php@main
+        with:
+          php-version: '8.1' 
 
-    - name: Check PHP Syntax
-      run: |
-        find . -name "*.php" -print0 | xargs -0 -n1 php -l
+      - name: Check PHP version
+        run: php -v
+
+      - name: Check PHP syntax
+        run: php -l index.php
