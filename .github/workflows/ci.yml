@@ -1,21 +1,27 @@
-name: Simple Core PHP CI by Ravish Kumar 
+
+---
+
+## ✅ How to Use This Action in Another Repo
+
+Aapka main project (e.g., PHP app) ka workflow kuch aisa hoga:
+
+```yaml
+name: CI by Ravish
 
 on:
   push:
-    branches: [ "main" ]  # या "master"
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'  # PHP version बदल सकते हो
+    - name: Setup PHP (custom)
+      uses: ravishkumar9097/cicd@main
 
     - name: Check PHP Syntax
       run: |
