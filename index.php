@@ -1,6 +1,2 @@
 <php
-
-
-print_r("reeee")
-
-?>
+echo "Hello";
