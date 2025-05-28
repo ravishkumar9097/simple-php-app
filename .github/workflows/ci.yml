@@ -1,8 +1,8 @@
-name: Simple Core PHP CI by Ravish Kumar
+name: PHP CI - Check Changed PHP Files Only
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
   build:
@@ -12,27 +12,28 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # pura git history chahiye for diff
+        fetch-depth: 0  # pura git history chahiye taaki diff chale
 
-    - name: Set up PHP
+    - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
 
-    - name: Check syntax of changed PHP files only
+    - name: Check PHP syntax on changed files only
       run: |
-        # Get list of changed PHP files compared to main branch
+        echo "Getting list of changed PHP files compared to main branch..."
         files=$(git diff --name-only origin/main...HEAD -- '*.php')
 
         if [ -z "$files" ]; then
-          echo "No PHP files changed."
+          echo "No PHP files changed. Skipping syntax check."
           exit 0
         fi
 
-        echo "Checking syntax for changed files:"
+        echo "Changed PHP files:"
         echo "$files"
 
-        # Loop over each file and check syntax
+        echo "Running syntax check on changed files..."
         for file in $files; do
+          echo "Checking $file"
           php -l "$file"
         done
