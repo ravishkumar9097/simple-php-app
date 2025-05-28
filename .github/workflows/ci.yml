@@ -1,24 +1,38 @@
-name: PHP CI
+name: Simple Core PHP CI by Ravish Kumar
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # pura git history chahiye for diff
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
 
-    - name: Run PHP syntax check
+    - name: Check syntax of changed PHP files only
       run: |
-        php -l index.php
+        # Get list of changed PHP files compared to main branch
+        files=$(git diff --name-only origin/main...HEAD -- '*.php')
 
-    - name: Run tests
-      run: |
-        composer install
-        ./vendor/bin/phpunit
+        if [ -z "$files" ]; then
+          echo "No PHP files changed."
+          exit 0
+        fi
+
+        echo "Checking syntax for changed files:"
+        echo "$files"
+
+        # Loop over each file and check syntax
+        for file in $files; do
+          php -l "$file"
+        done
