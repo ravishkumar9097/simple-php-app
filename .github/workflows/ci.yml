@@ -1,22 +1,24 @@
-name: Simple Core PHP CI by Ravish Kumar 
+name: PHP CI
 
-on:
-  push:
-    branches: [ "main" ]  # या "master"
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'  
+        php-version: '8.1'
 
-    - name: Check PHP Syntax
+    - name: Run PHP syntax check
       run: |
-        find . -name "*.php" -print0 | xargs -0 -n1 php -l
+        php -l index.php
+
+    - name: Run tests
+      run: |
+        composer install
+        ./vendor/bin/phpunit
