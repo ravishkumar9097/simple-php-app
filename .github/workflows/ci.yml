@@ -5,7 +5,6 @@
 
 Aapka main project (e.g., PHP app) ka workflow kuch aisa hoga:
 
-```yaml
 name: CI by Ravish
 
 on:
