@@ -1,0 +1,44 @@
+name: PHP CI - Check Changed PHP Files Only
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Fetch origin main branch
+      run: git fetch origin main
+
+    - name: Check PHP syntax on changed files only
+      shell: bash
+      run: |
+        set -e
+
+        echo "Detecting changed PHP files compared to origin/main..."
+        files=$(git diff --name-only origin/main...HEAD -- '*.php')
+
+        if [ -z "$files" ]; then
+          echo "No PHP files changed. Skipping syntax check."
+          exit 0
+        fi
+
+        echo "Changed PHP files:"
+        echo "$files"
+
+        for file in $files; do
+          echo "Checking $file"
+          php -l "$file" || exit 1
+        done
